@@ -176,7 +176,8 @@ def _download_google_sheet_json(
         ("key", api_key),
     ]
     if sheet_name:
-        params.append(("ranges", f"'{sheet_name.replace(chr(39), chr(39) * 2)}'"))
+        escaped_sheet_name = sheet_name.replace("'", "''")
+        params.append(("ranges", f"'{escaped_sheet_name}'!A:ZZ"))
 
     endpoint = (
         f"https://sheets.googleapis.com/v4/spreadsheets/{quote(spreadsheet_id)}?"
