@@ -1,47 +1,48 @@
 {
   "title": "Мониторинг цен из Google Таблицы",
+  "description": "Программа читает города, магазины и гиперссылки на товары из Google Таблицы, проверяет цены и сохраняет результаты в Dataset Apify.",
   "type": "object",
   "schemaVersion": 1,
   "properties": {
     "googleSheetUrl": {
       "title": "Ссылка на Google Таблицу",
       "type": "string",
-      "description": "Таблица с городами, магазинами и гиперссылками в ячейках 50/100.",
+      "description": "Ссылка на Google Таблицу с городами, магазинами и гиперссылками в ячейках 50 и 100.",
       "editor": "textfield",
       "default": "https://docs.google.com/spreadsheets/d/1gbRQSiqDPErgIe0m4mJhwqGXW28ViH-najbKKHpGpMo/edit?usp=sharing"
     },
     "googleSheetsApiKey": {
       "title": "Google Sheets API key",
       "type": "string",
-      "description": "API-ключ Google Cloud с разрешённым Google Sheets API.",
+      "description": "API-ключ Google Cloud, для которого включён Google Sheets API.",
       "editor": "textfield",
       "isSecret": true
     },
     "sheetName": {
       "title": "Название листа",
       "type": "string",
-      "description": "Название вкладки Google Таблицы. Оставьте Input, пока города расположены на этой вкладке.",
+      "description": "Название вкладки Google Таблицы, которую программа должна читать.",
       "editor": "textfield",
       "default": "Input"
     },
     "cities": {
       "title": "Города для проверки",
       "type": "array",
-      "description": "Пустой список означает проверку всех городов. Для теста можно указать только Казань.",
+      "description": "Пустой список означает проверку всех городов. Для теста можно указать один или несколько городов.",
       "editor": "stringList",
       "default": []
     },
     "quantityM2": {
       "title": "Расчётная площадь, м²",
       "type": "number",
-      "description": "Для какой площади рассчитывать количество упаковок и общую стоимость.",
+      "description": "Площадь, для которой программа рассчитывает количество упаковок или листов и общую стоимость.",
       "default": 100,
       "minimum": 0.01
     },
     "proxyStores": {
       "title": "Магазины и домены через Residential Proxy",
       "type": "array",
-      "description": "Прокси применяется только к строкам, где название магазина или адрес содержит одно из этих значений.",
+      "description": "Residential Proxy применяется только к магазинам, название или адрес которых содержит одно из указанных значений.",
       "editor": "stringList",
       "default": [
         "САКСЭС",
@@ -51,24 +52,28 @@
     "headless": {
       "title": "Фоновый режим браузера",
       "type": "boolean",
+      "description": "Запускать браузер без отображения графического окна.",
       "default": true,
       "editor": "checkbox"
     },
     "saveDebug": {
-      "title": "Сохранять отладочные скриншоты и HTML при ошибках",
+      "title": "Сохранять отладочные файлы при ошибках",
       "type": "boolean",
+      "description": "Сохранять HTML и скриншоты страниц, на которых возникли ошибки, CAPTCHA или блокировка.",
       "default": true,
       "editor": "checkbox"
     },
     "saveDebugOnSuccess": {
       "title": "Сохранять отладочные файлы для успешных карточек",
       "type": "boolean",
+      "description": "Сохранять HTML и скриншоты даже для карточек, где цена была успешно получена.",
       "default": false,
       "editor": "checkbox"
     },
     "requestDelayMs": {
       "title": "Пауза между карточками, мс",
       "type": "integer",
+      "description": "Задержка между открытием карточек товаров, чтобы снизить вероятность блокировки сайта.",
       "default": 4000,
       "minimum": 0,
       "maximum": 60000
@@ -76,6 +81,7 @@
     "pageTimeoutMs": {
       "title": "Тайм-аут открытия страницы, мс",
       "type": "integer",
+      "description": "Максимальное время ожидания загрузки одной страницы товара.",
       "default": 60000,
       "minimum": 10000,
       "maximum": 180000
@@ -83,6 +89,7 @@
     "maxRetries": {
       "title": "Повторные попытки при временных ошибках",
       "type": "integer",
+      "description": "Количество повторных попыток при временных сетевых ошибках, HTTP 429 и ошибках сервера.",
       "default": 2,
       "minimum": 0,
       "maximum": 5
@@ -90,18 +97,21 @@
     "useResidentialProxy": {
       "title": "Использовать Apify Residential Proxy",
       "type": "boolean",
+      "description": "Использовать Residential Proxy Apify для магазинов, перечисленных в поле proxyStores.",
       "default": true,
       "editor": "checkbox"
     },
     "proxyRequired": {
       "title": "Останавливать запуск, если Residential Proxy недоступен",
       "type": "boolean",
+      "description": "Завершить запуск с ошибкой, если Residential Proxy нельзя создать. При выключенном параметре программа продолжит работу напрямую.",
       "default": false,
       "editor": "checkbox"
     },
     "maxProxyRotations": {
       "title": "Максимум смен прокси-сессии при 403",
       "type": "integer",
+      "description": "Сколько раз менять Residential Proxy-сессию, если магазин возвращает HTTP 403.",
       "default": 2,
       "minimum": 0,
       "maximum": 5
