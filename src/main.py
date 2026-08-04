@@ -175,9 +175,11 @@ def _download_google_sheet_json(
         ("fields", fields),
         ("key", api_key),
     ]
-    if sheet_name:
-        escaped_sheet_name = sheet_name.replace("'", "''")
-        params.append(("ranges", f"'{escaped_sheet_name}'!A:ZZ"))
+    # Не передаём ranges в Google Sheets API.
+    # Некоторые таблицы содержат скрытые пробелы или специальные символы
+    # в имени листа, из-за чего API возвращает INVALID_ARGUMENT даже при
+    # визуально правильном имени. Загружаем данные всех листов и выбираем
+    # нужный лист по его реальному title уже в Python.
 
     endpoint = (
         f"https://sheets.googleapis.com/v4/spreadsheets/{quote(spreadsheet_id)}?"
@@ -361,7 +363,14 @@ def parse_google_sheet_stores(
             if normalize_label((sheet.get("properties") or {}).get("title")) == normalize_label(sheet_name)
         ]
         if not available_sheets:
-            raise ValueError(f"Лист Google Таблицы '{sheet_name}' не найден")
+            actual_titles = [
+                normalize_text((sheet.get("properties") or {}).get("title"))
+                for sheet in payload.get("sheets") or []
+            ]
+            raise ValueError(
+                f"Лист Google Таблицы '{sheet_name}' не найден. "
+                f"Доступные листы: {actual_titles}"
+            )
 
     for sheet in available_sheets:
         title = normalize_text((sheet.get("properties") or {}).get("title"))
