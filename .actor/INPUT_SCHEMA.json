@@ -23,7 +23,7 @@
       "type": "string",
       "description": "Название вкладки Google Таблицы, которую программа должна читать.",
       "editor": "textfield",
-      "default": "Input"
+      "default": "Информация на товар"
     },
     "cities": {
       "title": "Города для проверки",
