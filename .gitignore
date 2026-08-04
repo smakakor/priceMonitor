@@ -1,0 +1,7 @@
+__pycache__/
+*.py[cod]
+.env
+storage/datasets/
+storage/request_queues/
+storage/key_value_stores/default/*.png
+storage/key_value_stores/default/*.html

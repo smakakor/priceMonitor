@@ -1,0 +1,22 @@
+{
+  "googleSheetUrl": "https://docs.google.com/spreadsheets/d/1gbRQSiqDPErgIe0m4mJhwqGXW28ViH-najbKKHpGpMo/edit?usp=sharing",
+  "googleSheetsApiKey": "",
+  "sheetName": "Input",
+  "cities": [
+    "Казань"
+  ],
+  "quantityM2": 100,
+  "proxyStores": [
+    "САКСЭС",
+    "s-stroy.ru"
+  ],
+  "headless": true,
+  "saveDebug": true,
+  "saveDebugOnSuccess": false,
+  "requestDelayMs": 4000,
+  "pageTimeoutMs": 60000,
+  "maxRetries": 2,
+  "useResidentialProxy": true,
+  "proxyRequired": false,
+  "maxProxyRotations": 2
+}

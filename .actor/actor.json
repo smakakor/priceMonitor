@@ -1,0 +1,10 @@
+{
+  "actorSpecification": 1,
+  "name": "price-monitor-google-sheets",
+  "title": "Мониторинг цен из Google Таблицы",
+  "description": "Читает города, магазины и гиперссылки из Google Таблицы, проверяет карточки товаров через Playwright и сохраняет результаты в Dataset.",
+  "version": "1.0",
+  "buildTag": "latest",
+  "dockerfile": "../Dockerfile",
+  "input": "./INPUT_SCHEMA.json"
+}
